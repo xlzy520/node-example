@@ -1,7 +1,7 @@
 {
-  "name": "images-example",
+  "name": "nodejs-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "Nodejs相关的使用案例",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
