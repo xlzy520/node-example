@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const fs = require('fs')
+const Mock = require('mockjs')
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json({limit: '1mb'}));  //body-parser 解析json格式数据
@@ -32,19 +33,22 @@ app.post('/excel/login', (req, res) => {
 app.post('/excel/info', (req, res) => {
   res.send(result({
     username: 'zhibi',
-    realName: '吕宗远',
     roleCode: 'admin'
   }))
 })
 app.post('/excel/user/list', (req, res) => {
-  let arr = []
-  for (let i = 0; i < 10; i++) {
-    arr.push({name: `姓名${i}`,password: '123456', modifyDate: '2019-11-10',})
-  }
-  res.send(result({
+  const data = Mock.mock({
+    'list|15': [{
+      username: '@cname',
+      school: '@county() '+'第'+'@cword("零一二三四五六七八九十")'+'学校',
+      phone: /^1[3456789]\d{9}$/,
+      grade: '@pick(["0", "1", "2", "3", "4"])',
+      modifyDate: '2019-11-10',
+      createDate: '2019-11-01'
+    }],
     total: 20,
-    list: arr
-  }))
+  })
+  res.send(result(data))
 })
 app.get('/picGoConfig/info', (req, res) => {
   const stat = fs.statSync(configPath)
