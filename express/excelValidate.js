@@ -3,11 +3,14 @@ const app = express()
 const fs = require('fs')
 const Mock = require('mockjs')
 const bodyParser = require('body-parser');
+const multer  = require('multer');
 
 app.use(bodyParser.json({limit: '1mb'}));  //body-parser 解析json格式数据
 app.use(bodyParser.urlencoded({            //此项必须在 bodyParser.json 下面,为参数编码
   extended: true
 }));
+app.use(express.static(__dirname + '/static'));
+app.use(multer({ dest: '/static/'}).single('file'));
 
 
 const absPath = __dirname + '\\'
