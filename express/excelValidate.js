@@ -62,11 +62,15 @@ app.post('/excel/user/delete', (req, res) => {
 app.post('/excel/user/update', (req, res) => {
   res.send(result({}, true, '更新成功'))
 })
+app.post('/excel/user/changePassword', (req, res) => {
+  res.send(result({}, true, '更新成功'))
+})
 
 // template
 app.post('/excel/template/list', (req, res) => {
   const data = Mock.mock({
     'list|5': [{
+      id: '@id',
       name:  '2019-11-10' + '@pick(["幼儿园", "小学", "初中", "中职", "高中"])'+'xx项目',
       grade: '@pick(["0", "1", "2", "3", "4"])',
       url: 'http://localhost:3000/1.xlsx',
@@ -92,7 +96,7 @@ app.post('/excel/template/update', (req, res) => {
 app.post('/excel/counting/list', (req, res) => {
   const data = Mock.mock({
     'list|5': [{
-      name:  '2019-11-10' + '@pick(["幼儿园", "小学", "初中", "中职", "高中"])'+'xx项目',
+      school: '@county() ' + '第' + '@cword("零一二三四五六七八九十")' + '学校',
       modifyDate: '2019-11-10',
       createDate: '2019-11-01',
       'total|50-300': 50
@@ -101,6 +105,24 @@ app.post('/excel/counting/list', (req, res) => {
   })
   res.send(result(data))
 })
+
+// students
+app.post('/excel/students/list', (req, res) => {
+  const data = Mock.mock({
+    'list|5': [{
+      school: '@county() ' + '第' + '@cword("零一二三四五六七八九十")' + '学校',
+      modifyDate: '2019-11-10',
+      createDate: '2019-11-01',
+      'total|50-300': 50
+    }],
+    total: 5,
+  })
+  res.send(result(data))
+})
+app.post('/excel/students/add', (req, res) => {
+  res.send(result({}, true, '添加成功'))
+})
+
 
 // upload file
 app.post('/excel/upload', (req, res) => {
@@ -131,6 +153,8 @@ app.post('/excel/upload', (req, res) => {
     });
   });
 })
+
+
 
 app.get('/picGoConfig/download', (req, res) => {
   if (fileExists) {
