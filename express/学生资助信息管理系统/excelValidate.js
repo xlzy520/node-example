@@ -14,7 +14,6 @@ db.defaults({ template: [], user: [], count: [], file:[],students:{} }).write()
 // server
 const express = require('express')
 const app = express()
-const Mock = require('mockjs')
 const bodyParser = require('body-parser');
 const multer  = require('multer');
 app.use(bodyParser.json({limit: '1mb'}));  //body-parser 解析json格式数据
@@ -152,15 +151,7 @@ app.post('/excel/counting/list', (req, res) => {
 
 // students
 app.post('/excel/students/list', (req, res) => {
-  const data = Mock.mock({
-    'list|5': [{
-      school: '@county() ' + '第' + '@cword("零一二三四五六七八九十")' + '学校',
-      modifyDate: '2019-11-10',
-      saveDate: '2019-11-01',
-      'total|50-300': 50
-    }],
-    total: 5,
-  })
+  const data = {}
   res.send(result(data))
 })
 app.post('/excel/students/add', (req, res) => {
