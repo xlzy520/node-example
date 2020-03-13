@@ -4,6 +4,9 @@ const iconv = require('iconv-lite');
 
 const url = 'http://www.jjwxc.net/onebook.php?novelid=1939548'
 let preCharacter = 186
+
+fetchNovel()
+
 function fetchNovel(){
   request({
     url,
@@ -22,15 +25,10 @@ function fetchNovel(){
   });
 }
 
-setInterval(()=>{
-  fetchNovel()
-}, 5*60*1000)
-
-
 function shortMessage(latest) {
   const SMSClient = require('@alicloud/sms-sdk')
-  const accessKeyId = ''
-  const secretAccessKey = ''
+  const accessKeyId = process.argv[3]
+  const secretAccessKey = process.argv[4]
   let smsClient = new SMSClient({accessKeyId, secretAccessKey})
   smsClient.sendSMS({
     PhoneNumbers: '17852098440',

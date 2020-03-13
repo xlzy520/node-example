@@ -1,0 +1,13 @@
+name: 小说更新
+on:
+  schedule:
+    - cron:  '*/15 * * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 执行JS
+        run: node ./node-crawler/novel-update.js ${{ secrets.accessKeyId }} ${{ secrets.secretAccessKey }}
