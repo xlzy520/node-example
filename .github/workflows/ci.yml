@@ -1,7 +1,7 @@
 name: 小说更新
 on:
-  schedule:
-    - cron:  '*/15 * * * *'
+#  schedule:
+#    - cron:  '*/15 * * * *'
 
 jobs:
   build:
@@ -10,4 +10,7 @@ jobs:
 
     steps:
       - name: 执行JS
-        run: node ./node-crawler/novel-update.js ${{ secrets.accessKeyId }} ${{ secrets.secretAccessKey }}
+        run: |
+          yarn
+          node ./node-crawler/novel-update.js ${{ secrets.accessKeyId }} ${{ secrets.secretAccessKey }}
+
