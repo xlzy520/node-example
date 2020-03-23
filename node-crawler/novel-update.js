@@ -1,13 +1,21 @@
 const cheerio = require('cheerio');
 const request = require('request');
 const iconv = require('iconv-lite');
+const config = require('./smsConfig')
+const fs = require('fs')
 
 const url = 'http://www.jjwxc.net/onebook.php?novelid=1939548'
-let preCharacter = 186
 
-fetchNovel()
+fs.readFile('character', 'utf-8',(err,data)=>{
+  if(err){
+    console.log("error");
+  }else{
+    fetchNovel(data)
+  }
+});
 
-function fetchNovel(){
+
+function fetchNovel(preCharacter){
   request({
     url,
     gzip: true,
@@ -21,14 +29,19 @@ function fetchNovel(){
     if (latest > preCharacter) {
       preCharacter = latest
       shortMessage(latest)
+      fs.writeFile('character', latest,(err,data)=>{
+        if(err){
+          console.error("write file error");
+        }
+      });
     }
   });
 }
 
 function shortMessage(latest) {
   const SMSClient = require('@alicloud/sms-sdk')
-  const accessKeyId = process.argv[3]
-  const secretAccessKey = process.argv[4]
+  const accessKeyId = config? config.accessKeyId : process.argv[3]
+  const secretAccessKey = config ? config.secretAccessKey: process.argv[4]
   let smsClient = new SMSClient({accessKeyId, secretAccessKey})
   smsClient.sendSMS({
     PhoneNumbers: '17852098440',
@@ -40,6 +53,4 @@ function shortMessage(latest) {
   }, function (err) {
     console.log(err)
   })
-  
-  
 }
