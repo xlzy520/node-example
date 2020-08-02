@@ -1,0 +1,17 @@
+{
+  "name": "ocr-handwriting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ocr-handwriting-node.js",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "log4node": "^0.1.6",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
