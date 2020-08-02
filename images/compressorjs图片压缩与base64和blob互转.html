@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script src="../node_modules/compressorjs/dist/compressor.min.js"></script>
+  <title>Title</title>
+</head>
+<body>
+
+<img id="img" src="">
+<input type="file">
+<button onclick="compress">压缩</button>
+<script>
+  document.querySelector('input').addEventListener('change', (evt, )=>{
+    var file = document.querySelector("input").files[0]
+    // console.log(file);
+    new Compressor(file, {
+      quality: 0.1,
+      convertSize: 15000000,
+      // 压缩质量 0.1-0.9
+      success(result) {
+        blobToDataURL(result, (data)=>{
+          const newBase64 = data // 最终压缩后的base64,这是你需要的
+          document.querySelector('#img').src = newBase64 // 生成URL来模拟展示
+          console.log(newBase64);
+        })
+      },
+      error(err) {
+        console.log(err.message);
+      },
+    });
+
+  })
+
+  function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(',');
+    //注意base64的最后面中括号和引号是不转译的
+    var _arr = arr[1].substring(0,arr[1].length-2);
+    var mime = arr[0].match(/:(.*?);/)[1],
+      bstr =atob(_arr),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {
+      type: mime
+    });
+  }
+
+  function blobToDataURL(blob, callback) {
+    let a = new FileReader();
+    a.onload = function (e) { callback(e.target.result); }
+    a.readAsDataURL(blob);
+  }
+
+  function compress() {
+    // 初始图片的base64
+    const base64 = ''
+    let  blob = dataURLtoBlob(base64)
+    new Compressor(blob, {
+      quality: 0.1,
+      // 压缩质量 0.1-0.9
+      success(result) {
+        blobToDataURL(result, (data)=>{
+          const newBase64 = data // 最终压缩后的base64,这是你需要的
+          document.querySelector('#img').src = newBase64 // 生成URL来模拟展示
+        })
+      },
+      error(err) {
+        console.log(err.message);
+      },
+    });
+  }
+</script>
+</body>
+</html>
