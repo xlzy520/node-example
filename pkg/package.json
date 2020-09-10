@@ -1,0 +1,33 @@
+{
+  "name": "steam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pkg": "pkg . --out-path=dist/"
+  },
+  "pkg": {
+    "targets": [
+      "node10-macos-x64",
+      "node10-win-x64"
+    ],
+    "assets": [
+      "./node_modules/**/*"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bin": "./index.js",
+  "targets": [
+    "node10.21.0-win-x64",
+    "node10.21.0-macos-x64"
+  ],
+  "dependencies": {
+    "pkg": "^4.4.9",
+    "steam-totp": "^2.1.1",
+    "steam-tradeoffer-manager": "^2.10.2",
+    "steam-user": "^4.18.0",
+    "steamcommunity": "^3.41.6"
+  }
+}
