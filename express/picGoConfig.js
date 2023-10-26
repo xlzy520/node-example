@@ -23,6 +23,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/picGoConfig/info', (req, res) => {
+  console.log('收到请求');
   const stat = fs.statSync(configPath)
   res.send(stat.mtime.toLocaleString())
 })
